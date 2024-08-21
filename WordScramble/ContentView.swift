@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     
     var body: some View {
         NavigationStack {
@@ -48,9 +49,16 @@ struct ContentView: View {
                 Text(errorMessage)
             }
             .toolbar(content: {
-                ToolbarItem(placement: .bottomBar) {
-                    Button("Restart Game"){
-                        startGame()
+                ToolbarItemGroup(placement: .bottomBar) {
+                    VStack {
+                        Text("Score: \(score)")
+                            .font(.title)
+                        
+                        Button("Restart Game"){
+                            usedWords.removeAll()
+                            startGame()
+                        }
+                        Spacer(minLength: 50)
                     }
                 }
             })
@@ -91,6 +99,7 @@ struct ContentView: View {
         
         withAnimation {
             usedWords.insert(answer, at: 0)
+            score += answer.count
         }
         newWord = ""
     }
