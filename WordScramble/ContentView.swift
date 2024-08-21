@@ -72,6 +72,16 @@ struct ContentView: View {
             return 
         }
         
+        guard answer.count > 2 else {
+            wordError(title: "The answer is too short", message: "You must enter a word longer than two letters!")
+            return
+        }
+        
+        guard answer != rootWord else {
+            wordError(title: "The answer is the same as the root word", message: "You must enter an answer other than the root word!")
+            return
+        }
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
